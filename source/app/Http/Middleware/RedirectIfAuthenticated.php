@@ -31,22 +31,16 @@ class RedirectIfAuthenticated
         //     }
         // }
 
-        foreach ($guards as $guard) {
-            if (Auth::guard(self::GUARD_USERS)->check() && $request->routeIs('users.*')) {
-                return redirect(RouteServiceProvider::USER_HOME);
-            }
+        if (Auth::guard(self::GUARD_USERS)->check() && $request->routeIs('user.*')) {
+            return redirect(RouteServiceProvider::USER_HOME);
         }
 
-        foreach ($guards as $guard) {
-            if (Auth::guard(self::GUARD_OWNERS)->check() && $request->routeIs('owners.*')) {
-                return redirect(RouteServiceProvider::OWNER_HOME);
-            }
+        if (Auth::guard(self::GUARD_OWNERS)->check() && $request->routeIs('owner.*')) {
+            return redirect(RouteServiceProvider::OWNER_HOME);
         }
 
-        foreach ($guards as $guard) {
-            if (Auth::guard(self::GUARD_ADMIN)->check() && $request->routeIs('admin.*')) {
-                return redirect(RouteServiceProvider::ADMIN_HOME);
-            }
+        if (Auth::guard(self::GUARD_ADMIN)->check() && $request->routeIs('admin.*')) {
+            return redirect(RouteServiceProvider::ADMIN_HOME);
         }
 
         return $next($request);
